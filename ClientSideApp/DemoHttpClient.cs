@@ -28,6 +28,13 @@ namespace ClientSideApp
             _url = settings.Url;
         }
 
+        /// <summary>
+        /// Uploads the file.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">filePath</exception>
+        /// <exception cref="System.IO.FileNotFoundException">File [{filePath}] not found.</exception>
         public async Task<string> UploadFile(string filePath)
         {
             _logger.LogInformation($"Uploading a text file [{filePath}].");
@@ -55,19 +62,26 @@ namespace ClientSideApp
 
             var result = await response.Content.ReadAsStringAsync();
             _logger.LogInformation("Uploading is complete.");
+            _logger.LogInformation($"API Response: {result}\n\n");
 
             return result;
         }
 
-        public async Task<string> DownloadFile(string code)
+        /// <summary>
+        /// Downloads the file.
+        /// </summary>
+        /// <param name="fileUrl">The file URL.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">fileUrl - URL is empty.</exception>
+        public async Task<string> DownloadFile(string fileUrl)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                throw new ArgumentNullException(nameof(code), "Code is empty.");
+            if (string.IsNullOrWhiteSpace(fileUrl))
+                throw new ArgumentNullException(nameof(fileUrl), "URL is empty.");
 
-            _logger.LogInformation($"Downloading File with {code}.");
+            _logger.LogInformation($"Downloading File from {fileUrl}.");
             var fileInfo = new FileInfo("TempFile.png");
 
-            var response = await _httpClient.GetAsync($"{_url}/api/files/{code}");
+            var response = await _httpClient.GetAsync(fileUrl);
             response.EnsureSuccessStatusCode();
 
             await using var ms = await response.Content.ReadAsStreamAsync();

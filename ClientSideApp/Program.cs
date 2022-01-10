@@ -22,8 +22,9 @@ namespace ClientSideApp
             var serviceProvider = services.BuildServiceProvider();
 
             var client = serviceProvider.GetRequiredService<IDemoHttpClient>();
-            string code = await client.UploadFile(args[1]);
-            await client.DownloadFile(code);
+            string filePath = await client.UploadFile(args[1]);
+
+            await client.DownloadFile(filePath);
 
             Console.WriteLine();
         }
