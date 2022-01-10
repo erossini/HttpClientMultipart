@@ -1,0 +1,16 @@
+﻿global using System;
+global using System.Collections.Generic;
+global using System.IO;
+global using System.Linq;
+global using System.Net;
+global using System.Threading.Tasks;
+global using Microsoft.AspNetCore.Http.Features;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.WebUtilities;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Net.Http.Headers;
+global using ServerSideApp.Extensions;
+global using ServerSideApp.Filters;
+global using ServerSideApp.Models;
+global using ServerSideApp.Utilities;
